@@ -1,7 +1,7 @@
 "use strict";
 // settings
-const ZiraIndex = 11,
-rate = 1.1161, //.2589 .115
+const ZiraIndex = 0,
+rate = 1, //.2589 .115 .1161
 skip = [
     "…",
     "...",
@@ -10,9 +10,9 @@ skip = [
     "**",
     "“…”"
 ]
-let voice = speechSynthesis.getVoices()[ZiraIndex]
+let voice = speechSynthesis.getVoices().filter(e => {e.lang == "en-US"})[ZiraIndex]
 if (speechSynthesis.onvoiceschanged !== undefined) { speechSynthesis.onvoiceschanged = setVoice }
-function setVoice() { voice = speechSynthesis.getVoices()[ZiraIndex] }
+function setVoice() { voice = speechSynthesis.getVoices().filter(e => {e.lang.contains("en-US")})[ZiraIndex] }
 
 
 const playEle = document.querySelector('#play'),
@@ -121,7 +121,7 @@ function onstart() {
 }
 
 function onend(e) {
-    nodes[e.target.nodeindex].classList.remove("tts-highlight")
+    nodes[currentUtterance.nodeindex].classList.remove("tts-highlight")
     if(stop) {
         currentUtterance = utterances[0]
         stop = false
