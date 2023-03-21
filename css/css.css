@@ -1,0 +1,100 @@
+/* reset */
+div, span {
+	padding: 0;
+	margin: 0;
+}
+
+img {
+	width: 65vw;
+}
+
+
+body {
+	background-color: black /*#0c1011*/;
+	color: white;
+	font-family: verdana;
+	font-size: 35px;
+}
+.cuerpo {
+	/* width: 1200px;
+	margin: 50px auto 100px; */	
+	margin: -17px 1% 100px 2%;
+	overflow-x: hidden;
+}
+@media only screen and (min-width: 1900px) {
+	.cuerpo {
+		margin: 0 20%;
+	}
+}
+
+.tts-highlight {
+	outline: 10px solid rgb(100, 0, 0);
+}
+/* .cuerpo:not(.tts-highlight) {
+	background-color: rgba(255, 255, 255, 0.03);
+} */
+p {
+	padding: 0.7346em 10px;
+}
+tbody tr td{
+	border: 1px solid;
+	padding: 10px;
+}
+a {
+	text-decoration: none;
+	color: lightgreen;
+}
+::-webkit-scrollbar {
+	width: 20px;
+}
+::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 5px grey;
+	border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+	background-color: white; 
+	border-radius: 10px;
+}
+::-webkit-scrollbar-button {
+	height: 20%;
+}
+.botones {
+	position: fixed; 
+	bottom: 2%;
+	left: 2%;
+	border-radius: 10px;
+	background-color: skyblue;
+	padding: 10px;
+	user-select: none;
+	display:flex;
+	align-items:center;
+}
+button {
+	/* border-radius: 50%; */
+	background-color: inherit;
+	border: none;
+	cursor: pointer;
+	height: 50px;
+	width: 50px;
+	outline: none;
+	padding: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#play { background-image: url(../imagenes/Icons/Play/4.png); }
+#pause { background-image: url(../imagenes/Icons/Pause/4.png); }
+#stop { background-image: url(../imagenes/Icons/Stop/4.png); }
+#previous { width: 30px; background-image: url(../imagenes/Icons/Previous/3.png); }
+#next { width: 30px; background-image: url(../imagenes/Icons/Next/3.png); }
+
+#play.played { background-image: url(../imagenes/Icons/Play/3.png); }
+#pause.paused { background-image: url(../imagenes/Icons/Pause/3.png); }
+#stop.stopped { background-image: url(../imagenes/Icons/Stop/3.png); }
+
+/* #play:hover { background-image: url(../imagenes/Icons/Play/5.png); } */
+/* #pause:hover { background-image: url(../imagenes/Icons/Pause/5.png); } */
+/* #stop:hover { background-image: url(../imagenes/Icons/Stop/5.png); } */
+#previous:hover { background-image: url(../imagenes/Icons/Previous/1.png); }
+#next:hover { background-image: url(../imagenes/Icons/Next/1.png); }
+

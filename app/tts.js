@@ -12,12 +12,7 @@ var rateValue = document.querySelector('.rate-value');
 var voices = [];
 
 function populateVoiceList() {
-  voices = synth.getVoices().filter(f => f.lang.includes("en")).sort(function (a, b) {
-      const aname = a.name.toUpperCase(), bname = b.name.toUpperCase();
-      if ( aname < bname ) return -1;
-      else if ( aname == bname ) return 0;
-      else return +1;
-  });
+  voices = synth.getVoices();
   
   console.log(voices);
   var selectedIndex = voiceSelect.selectedIndex < 0 ? 0 : voiceSelect.selectedIndex;
@@ -59,6 +54,7 @@ function speak(){
     for(i = 0; i < voices.length ; i++) {
       if(voices[i].name === selectedOption) {
         utterThis.voice = voices[i];
+        document.querySelector('#data').textContent = "index: " + i;
         break;
       }
     }
