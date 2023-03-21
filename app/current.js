@@ -19,7 +19,8 @@ const playEle = document.querySelector('#play'),
 pauseEle = document.querySelector('#pause'),
 stopEle = document.querySelector('#stop'),
 previousEle = document.querySelector('#previous'),
-nextEle = document.querySelector('#next')
+nextEle = document.querySelector('#next'),
+data = document.querySelector('#data')
 
 playEle.addEventListener('click', onClickPlay)
 pauseEle.addEventListener('click', onClickPause)
@@ -74,6 +75,9 @@ function onClickPlay() {
         return
     }
     speechSynthesis.speak(currentUtterance)
+
+    
+    console.log(currentUtterance);
     
 }
 
@@ -82,12 +86,16 @@ function onClickPause() {
         buttonState("pause")
         speechSynthesis.pause()
     }
+    
+    console.log(currentUtterance);
 }
 
 function onClickStop() {
     stop = true
     buttonState("stop")
     speechSynthesis.cancel()
+    
+    console.log(currentUtterance);
 }
 
 function nextParagraph() {
@@ -113,7 +121,7 @@ function previousParagraph() {
 }
 
 function onstart() {
-    console.log(currentUtterance);
+    // console.log(currentUtterance);
     nodes[currentUtterance.nodeindex].classList.add("tts-highlight")
     nodes[currentUtterance.nodeindex].scrollIntoView({
         behavior: "smooth"//, block: "center"
