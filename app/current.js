@@ -32,6 +32,7 @@ let utterances = [],
 currentUtterance = null,
 content = document.querySelector(".cuerpo"),
 nodes = Array.from(content.children),
+pause = false,
 stop = false,
 backToStart = false
 
@@ -75,27 +76,18 @@ function onClickPlay() {
         return
     }
     speechSynthesis.speak(currentUtterance)
-
-    
-    console.log(currentUtterance);
-    
 }
 
 function onClickPause() {
-    if (speechSynthesis.speaking) {
-        buttonState("pause")
-        speechSynthesis.pause(currentUtterance)
-    }
-    
-    console.log(currentUtterance);
+    pause = true
+    buttonState("pause")
+    speechSynthesis.cancel()
 }
 
 function onClickStop() {
     stop = true
     buttonState("stop")
     speechSynthesis.cancel()
-    
-    console.log(currentUtterance);
 }
 
 function nextParagraph() {
@@ -130,21 +122,26 @@ function onstart() {
 
 function onend(e) {
     nodes[e.target.nodeindex].classList.remove("tts-highlight")
-    if(!stop) {
-        if(!playEle.classList.length) buttonState("play")
-        if(backToStart) {
-            currentUtterance = utterances[0]
-            backToStart = false
-        } else {
-            currentUtterance = utterances[currentUtterance.nodeindex + 1]
-            if(skip.includes(currentUtterance.text)) currentUtterance = utterances[currentUtterance.nodeindex + 1]
-            if(skip.includes(currentUtterance.text)) currentUtterance = utterances[currentUtterance.nodeindex + 1]
-        }
-        speechSynthesis.speak(currentUtterance)
-    } else {
+    if(stop) {
         currentUtterance = utterances[0]
         stop = false
+        return
     }
+    if(pause) {
+        pause = false
+        return
+    }
+
+    if(!playEle.classList.length) buttonState("play")
+    if(backToStart) {
+        currentUtterance = utterances[0]
+        backToStart = false
+    } else {
+        currentUtterance = utterances[currentUtterance.nodeindex + 1]
+        if(skip.includes(currentUtterance.text)) currentUtterance = utterances[currentUtterance.nodeindex + 1]
+        if(skip.includes(currentUtterance.text)) currentUtterance = utterances[currentUtterance.nodeindex + 1]
+    }
+    speechSynthesis.speak(currentUtterance)
 }
 
 function buttonState(state) {
