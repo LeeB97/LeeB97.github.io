@@ -84,7 +84,7 @@ function onClickPlay() {
 function onClickPause() {
     if (speechSynthesis.speaking) {
         buttonState("pause")
-        speechSynthesis.pause()
+        speechSynthesis.pause(currentUtterance)
     }
     
     console.log(currentUtterance);
