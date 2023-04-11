@@ -43,6 +43,12 @@ if (typeof speechSynthesis !== "undefined" && speechSynthesis.onvoiceschanged !=
   speechSynthesis.onvoiceschanged = populateVoice;
 }
 
+if(voice === undefined) {
+    setTimeout(() => {
+        voice = speechSynthesis.getVoices().filter(e => {e.lang == "en-US"})[ZiraIndex]
+    }, 1);
+}
+
 
 function initLoad() {
     console.log(voice);
