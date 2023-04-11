@@ -157,6 +157,8 @@ function onend() {
     currentUtterance = utterances[currentUtterance.nodeindex + 1]
     if(skip.includes(currentUtterance.text)) currentUtterance = utterances[currentUtterance.nodeindex + 1]
     if(skip.includes(currentUtterance.text)) currentUtterance = utterances[currentUtterance.nodeindex + 1]
+
+    speechSynthesis.speak(currentUtterance)
 }
 
 function buttonState(state) {
