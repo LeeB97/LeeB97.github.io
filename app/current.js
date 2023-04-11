@@ -1,7 +1,7 @@
 "use strict";
 // settings
-const ZiraIndex = 0,
-rate = 1, //.2589 .115 .1161
+const ZiraIndex = 1,
+rate = 1, //.2589 .115
 skip = [
     "…",
     "...",
@@ -10,17 +10,12 @@ skip = [
     "**",
     "“…”"
 ]
-let voice = speechSynthesis.getVoices().filter(e => {e.lang == "en-US"})[ZiraIndex]
-if (speechSynthesis.onvoiceschanged !== undefined) { speechSynthesis.onvoiceschanged = setVoice }
-function setVoice() { voice = speechSynthesis.getVoices().filter(e => {e.lang.contains("en-US")})[ZiraIndex] }
-
 
 const playEle = document.querySelector('#play'),
 pauseEle = document.querySelector('#pause'),
 stopEle = document.querySelector('#stop'),
 previousEle = document.querySelector('#previous'),
-nextEle = document.querySelector('#next'),
-data = document.querySelector('#data')
+nextEle = document.querySelector('#next')
 
 playEle.addEventListener('click', onClickPlay)
 pauseEle.addEventListener('click', onClickPause)
@@ -28,120 +23,140 @@ stopEle.addEventListener('click', onClickStop)
 previousEle.addEventListener('click', previousParagraph)
 nextEle.addEventListener('click', nextParagraph)
 
-let utterances = [],
-currentUtterance = null,
-content = document.querySelector(".cuerpo"),
-nodes = Array.from(content.children),
-pause = false,
-stop = false,
-backToStart = false
 
-// load utterances
-for (let index = 0; index < nodes.length; index++) {
-    const element = nodes[index]
-    let s = new SpeechSynthesisUtterance
-    s.lang = 'en-US'
-    s.text = element.textContent
-    s.nodeindex = index
-    s.rate = rate
-    s.voice = voice
-    s.onstart = onstart
-    s.onend = onend
-    utterances.push(s)
-    // jump to index
-    element.addEventListener('dblclick', function(e) {
-        if(!speechSynthesis.speaking && !speechSynthesis.paused) {
-            buttonState("play")
-            currentUtterance = utterances[index]
-            speechSynthesis.speak(currentUtterance)
-            return
-        }
-        if(index < 1) {
-            backToStart = true
-        } else {
-            currentUtterance = utterances[index - 1]
-        }
-        speechSynthesis.cancel(currentUtterance)
-    });
+let voice = speechSynthesis.getVoices().filter(e => {e.lang == "en-US"})[ZiraIndex],
+content,
+nodes,
+utterances = [],
+currentUtterance,
+backToStart = false,
+firstLoad = true,
+isButton = false
+
+function populateVoice() {
+    if (typeof speechSynthesis === "undefined") return;
+    const voices = speechSynthesis.getVoices().filter(e => {e.lang == "en-US"});
+    voice = voices[ZiraIndex];
+}
+
+if (typeof speechSynthesis !== "undefined" && speechSynthesis.onvoiceschanged !== undefined) {
+  speechSynthesis.onvoiceschanged = populateVoice;
+}
+
+
+function initLoad() {
+    console.log(voice);
+    content = document.querySelector(".cuerpo"),
+    nodes = Array.from(content.children)
+    // load utterances
+    for (let index = 0; index < nodes.length; index++) {
+        const element = nodes[index]
+        let s = new SpeechSynthesisUtterance
+        s.lang = 'en-US'
+        s.text = element.textContent
+        s.nodeindex = index
+        s.rate = rate
+        s.voice = voice
+        s.onstart = onstart
+        s.onend = onend
+        s.element = element
+        utterances.push(s)
+        // jump to index
+        element.addEventListener('dblclick', function(e) {
+            currentUtterance.element.classList.remove("tts-highlight")
+            if(!speechSynthesis.speaking && !speechSynthesis.paused) {
+                buttonState("play")
+                currentUtterance = utterances[index]
+                speechSynthesis.speak(currentUtterance)
+                return
+            }
+            if(index < 1) {
+                backToStart = true
+            } else {
+                currentUtterance = utterances[index - 1]
+            }
+            speechSynthesis.cancel(currentUtterance)
+        });
+    }
+    
+    nodes = null;
+    currentUtterance = utterances[0];
+    firstLoad = false;
 }
 
 // init
-currentUtterance = utterances[0]
+
 
 function onClickPlay() {
-    stop = false
+    if(firstLoad) initLoad();
     buttonState("play")
-    if (speechSynthesis.paused) {
-        speechSynthesis.resume()
-        return
-    }
     speechSynthesis.speak(currentUtterance)
 }
 
 function onClickPause() {
-    pause = true
-    buttonState("pause")
-    speechSynthesis.cancel()
+    if (speechSynthesis.speaking) {
+        buttonState("pause")
+        isButton = true
+        speechSynthesis.cancel(currentUtterance)
+    }
 }
 
 function onClickStop() {
-    stop = true
+    currentUtterance.element.classList.remove("tts-highlight")
+    isButton = true
+    speechSynthesis.cancel(currentUtterance)
+    currentUtterance = utterances[0]
     buttonState("stop")
-    speechSynthesis.cancel()
 }
 
 function nextParagraph() {
+    currentUtterance.element.classList.remove("tts-highlight")
+    isButton = true
     speechSynthesis.cancel(currentUtterance)
-    if(!speechSynthesis.speaking && !speechSynthesis.paused) {
-        buttonState("play")
-        speechSynthesis.speak(currentUtterance)
-        return
-    }
+    
+    currentUtterance = utterances[currentUtterance.nodeindex + 1]
+    buttonState("play")
+    speechSynthesis.speak(currentUtterance)
 }
 
 function previousParagraph() {
+    currentUtterance.element.classList.remove("tts-highlight")
     if(!speechSynthesis.speaking && !speechSynthesis.paused) {
         buttonState("play")
         speechSynthesis.speak(currentUtterance)
         return
     }
-    if(currentUtterance.nodeindex < 2) backToStart = true
-    else currentUtterance = utterances[currentUtterance.nodeindex - 2]
-    // if currentUtterance.text is ... back one more
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
+
+    isButton = true
     speechSynthesis.cancel(currentUtterance)
+
+    if(currentUtterance.nodeindex < 2) currentUtterance = utterances[0]
+    else currentUtterance = utterances[currentUtterance.nodeindex - 1]
+
+    speechSynthesis.speak(currentUtterance)
 }
 
 function onstart() {
-    // console.log(currentUtterance);
-    nodes[currentUtterance.nodeindex].classList.add("tts-highlight")
-    nodes[currentUtterance.nodeindex].scrollIntoView({
+    console.log(currentUtterance);
+    currentUtterance.element.classList.add("tts-highlight")
+    currentUtterance.element.scrollIntoView({
         behavior: "smooth"//, block: "center"
     })
 }
 
-function onend(e) {
-    nodes[currentUtterance.nodeindex].classList.remove("tts-highlight")
-    if(stop) {
-        currentUtterance = utterances[0]
-        stop = false
-        return
-    }
-    if(pause) {
-        pause = false
+function onend() {
+    if(isButton) {
+        isButton = false;
         return
     }
 
+    currentUtterance.element.classList.remove("tts-highlight")
+    
     if(!playEle.classList.length) buttonState("play")
-    if(backToStart) {
-        currentUtterance = utterances[0]
-        backToStart = false
-    } else {
-        currentUtterance = utterances[currentUtterance.nodeindex + 1]
-        if(skip.includes(currentUtterance.text)) currentUtterance = utterances[currentUtterance.nodeindex + 1]
-        if(skip.includes(currentUtterance.text)) currentUtterance = utterances[currentUtterance.nodeindex + 1]
-    }
-    speechSynthesis.speak(currentUtterance)
+    
+    currentUtterance = utterances[currentUtterance.nodeindex + 1]
+    if(skip.includes(currentUtterance.text)) currentUtterance = utterances[currentUtterance.nodeindex + 1]
+    if(skip.includes(currentUtterance.text)) currentUtterance = utterances[currentUtterance.nodeindex + 1]
 }
 
 function buttonState(state) {
@@ -162,5 +177,3 @@ function buttonState(state) {
             break;
     }
 }
-
-
