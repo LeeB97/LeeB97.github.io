@@ -171,5 +171,5 @@ function buttonState(state) {
 }
 
 function loadVoices(voice) {
-    utterances = utterances.map(utt => utt.voice = voice);
+    utterances.forEach(utt => utt.voice = voice);
 }
