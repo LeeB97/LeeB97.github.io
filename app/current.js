@@ -34,19 +34,19 @@ firstLoad = true,
 isButton = false
 
 function populateVoice() {
-    if (typeof speechSynthesis === "undefined") return;
-    voice = speechSynthesis.getVoices().filter(e => {e.lang == "en-US"})[ZiraIndex];
+    if (typeof speechSynthesis === "undefined") return
+    voice = speechSynthesis.getVoices().filter(e => {e.lang == "en-US"})[ZiraIndex]
 }
 
 if (typeof speechSynthesis !== "undefined" && speechSynthesis.onvoiceschanged !== undefined) {
-  speechSynthesis.onvoiceschanged = populateVoice;
+  speechSynthesis.onvoiceschanged = populateVoice
 }
 
 populateVoice()
 
 function initLoad() {
-    console.log(voice);
-    content = document.querySelector(".cuerpo"),
+    console.log(voice)
+    content = document.querySelector(".cuerpo")
     nodes = Array.from(content.children)
     // load utterances
     for (let index = 0; index < nodes.length; index++) {
@@ -69,16 +69,16 @@ function initLoad() {
             buttonState("play")
             currentUtterance = utterances[index]
             speechSynthesis.speak(currentUtterance)
-        });
+        })
     }
 
     // init
-    nodes = null;
-    currentUtterance = utterances[0];
-    firstLoad = false;
+    nodes = null
+    currentUtterance = utterances[0]
+    firstLoad = false
 }
 function onClickPlay() {
-    if(firstLoad) initLoad();
+    if(firstLoad) initLoad()
     buttonState("play")
     speechSynthesis.speak(currentUtterance)
 }
@@ -127,8 +127,6 @@ function previousParagraph() {
 }
 
 function onstart(e) {
-    console.log(e);
-    if(currentUtterance.voice === null) loadVoices(e.currentTarget.voice)
     currentUtterance.element.classList.add("tts-highlight")
     currentUtterance.element.scrollIntoView({
         behavior: "smooth"//, block: "center"
@@ -137,7 +135,7 @@ function onstart(e) {
 
 function onend(e) {
     if(isButton) {
-        isButton = false;
+        isButton = false
         return
     }
 
@@ -159,18 +157,18 @@ function buttonState(state) {
     switch (state) {
         case "play":
             playEle.classList.add('played')
-            break;
+            break
         case "pause":
             pauseEle.classList.add('paused')
-            break;
+            break
         case "stop":
             stopEle.classList.add('stopped')
-            break;
+            break
         default:
-            break;
+            break
     }
 }
 
 function loadVoices(voice) {
-    utterances.forEach(utt => utt.voice = voice);
+    utterances.forEach(utt => utt.voice = voice)
 }
