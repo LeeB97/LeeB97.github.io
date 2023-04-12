@@ -127,6 +127,7 @@ function previousParagraph() {
 }
 
 function onstart(e) {
+    console.log(e);
     if(currentUtterance.voice === null) loadVoices(e.currentTarget.voice)
     currentUtterance.element.classList.add("tts-highlight")
     currentUtterance.element.scrollIntoView({
