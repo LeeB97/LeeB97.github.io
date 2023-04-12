@@ -35,8 +35,9 @@ isButton = false
 
 function populateVoice() {
     if (typeof speechSynthesis === "undefined") return;
-    const voices = speechSynthesis.getVoices().filter(e => {e.lang == "en-US"});
-    voice = voices[ZiraIndex];
+    voice = speechSynthesis.getVoices().filter(e => {e.lang == "en-US"})[ZiraIndex];
+    
+    console.log(speechSynthesis.getVoices().filter(e => {e.lang == "en-US"}));
 }
 
 if (typeof speechSynthesis !== "undefined" && speechSynthesis.onvoiceschanged !== undefined) {
@@ -47,6 +48,10 @@ populateVoice()
 
 
 function initLoad() {
+    console.log(voice);
+    if(voice === undefined) {
+        populateVoice()
+    }
     console.log(voice);
     content = document.querySelector(".cuerpo"),
     nodes = Array.from(content.children)
