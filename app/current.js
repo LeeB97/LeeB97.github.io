@@ -36,8 +36,6 @@ isButton = false
 function populateVoice() {
     if (typeof speechSynthesis === "undefined") return;
     voice = speechSynthesis.getVoices().filter(e => {e.lang == "en-US"})[ZiraIndex];
-    
-    console.log(speechSynthesis.getVoices().filter(e => {e.lang == "en-US"}));
 }
 
 if (typeof speechSynthesis !== "undefined" && speechSynthesis.onvoiceschanged !== undefined) {
@@ -46,12 +44,7 @@ if (typeof speechSynthesis !== "undefined" && speechSynthesis.onvoiceschanged !=
 
 populateVoice()
 
-
 function initLoad() {
-    console.log(voice);
-    if(voice === undefined) {
-        populateVoice()
-    }
     console.log(voice);
     content = document.querySelector(".cuerpo"),
     nodes = Array.from(content.children)
@@ -71,29 +64,19 @@ function initLoad() {
         // jump to index
         element.addEventListener('dblclick', function(e) {
             currentUtterance.element.classList.remove("tts-highlight")
-            if(!speechSynthesis.speaking && !speechSynthesis.paused) {
-                buttonState("play")
-                currentUtterance = utterances[index]
-                speechSynthesis.speak(currentUtterance)
-                return
-            }
-            if(index < 1) {
-                backToStart = true
-            } else {
-                currentUtterance = utterances[index - 1]
-            }
+            isButton = true
             speechSynthesis.cancel(currentUtterance)
+            buttonState("play")
+            currentUtterance = utterances[index]
+            speechSynthesis.speak(currentUtterance)
         });
     }
-    
+
+    // init
     nodes = null;
     currentUtterance = utterances[0];
     firstLoad = false;
 }
-
-// init
-
-
 function onClickPlay() {
     if(firstLoad) initLoad();
     buttonState("play")
@@ -143,15 +126,15 @@ function previousParagraph() {
     speechSynthesis.speak(currentUtterance)
 }
 
-function onstart() {
-    console.log(currentUtterance);
+function onstart(e) {
+    if(currentUtterance.voice === null) loadVoices(e.currentTarget.voice)
     currentUtterance.element.classList.add("tts-highlight")
     currentUtterance.element.scrollIntoView({
         behavior: "smooth"//, block: "center"
     })
 }
 
-function onend() {
+function onend(e) {
     if(isButton) {
         isButton = false;
         return
@@ -185,4 +168,8 @@ function buttonState(state) {
         default:
             break;
     }
+}
+
+function loadVoices(voice) {
+    utterances = utterances.map(utt => utt.voice = voice);
 }
