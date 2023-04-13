@@ -30,7 +30,10 @@ nodes,
 utterances = [],
 currentUtterance,
 backToStart = false,
+firefox = false,
 isButton = false;
+
+if(navigator.userAgent.includes("Firefox") && navigator.userAgent.includes("Win64")) firefox = true
 
 function populateVoice() {
     if (typeof speechSynthesis === "undefined") return;
@@ -103,7 +106,7 @@ function onClickStop() {
 
 function nextParagraph() {
     buttonState("play");
-    if(currentUtterance.nodeindex == 0) { speechSynthesis.speak(currentUtterance); return; }
+    if(currentUtterance.nodeindex == 0 && !speechSynthesis.speaking) { speechSynthesis.speak(currentUtterance); return; }
     currentUtterance.element.classList.remove("tts-highlight");
     isButton = true;
     speechSynthesis.cancel(currentUtterance);
@@ -112,7 +115,7 @@ function nextParagraph() {
 }
 
 function previousParagraph() {
-    if(currentUtterance.nodeindex == 0) { speechSynthesis.speak(currentUtterance); return; }
+    if(currentUtterance.nodeindex == 0 && !speechSynthesis.speaking) { speechSynthesis.speak(currentUtterance); return; }
     currentUtterance.element.classList.remove("tts-highlight");
 
     isButton = true;
@@ -130,7 +133,9 @@ function onstart(e) {
 }
 
 function onend(e) {
-    if(isButton) { isButton = false; return; }
+    if(firefox) {
+        if(isButton) { isButton = false; return; }
+    }
     currentUtterance.element.classList.remove("tts-highlight");
     if(!playEle.classList.length) buttonState("play");
     
