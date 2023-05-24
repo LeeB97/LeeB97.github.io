@@ -1,6 +1,6 @@
 {
-  "name": "Fireship",
-  "short_name": "Fireship",
+  "name": "Book Reader",
+  "short_name": "Book Reader",
   "start_url": "./",
   "scope": "./",
   "shortcuts": [
