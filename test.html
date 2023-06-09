@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropbox.js/4.0.30/Dropbox-sdk.js" integrity="sha256-B2oONvdKJ3qkdcGzlVZwhFz55Pk6/+clzI+9hbK1C24=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js"></script>
+</head>
+<body>
+<div id="paragraphContainer">
+
+</div>
+
+<style>
+
+</style>
+<script>
+var dbx = new Dropbox.Dropbox({ accessToken: 'sl.Bf-VH8iKNPtujd8vFgvCVxQaV622g6mBLFZTEL6Evl2vzUJ5EdmOSE2Q-MvdyEC8l-nlMn7Oe8jWLuygKy73N_4vv2dA84Lx0pzoVNkvlrs4FCeeXWh5FmLr4LynB4bKEA8NDlA' });
+dbx.usersGetCurrentAccount()
+.then(function(response) {
+    console.log(response);
+})
+.catch(function(error) {
+    console.error(error);
+});
+dbx.filesListFolder({path: ''})
+    .then(function(response) {
+      console.log(response.entries);
+    })
+    .catch(function(error) {
+      console.error(error);
+    });
+</script>
+</body>
+</html>
