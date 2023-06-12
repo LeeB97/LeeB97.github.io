@@ -1,6 +1,6 @@
 {
-  "name": "Fireship",
-  "short_name": "Fireship",
+  "name": "Book Reader",
+  "short_name": "Book Reader",
   "start_url": "./",
   "scope": "./",
   "shortcuts": [
@@ -21,10 +21,28 @@
   ],
   "icons": [
     {
-      "src": "icons/manifest-icon-192.maskable.png",
+      "src": "imagenes/Icons/app/manifest-icon-192.maskable.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "imagenes/Icons/app/manifest-icon-192.maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "imagenes/Icons/app/manifest-icon-512.maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "imagenes/Icons/app/manifest-icon-512.maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
   "share_target": {
