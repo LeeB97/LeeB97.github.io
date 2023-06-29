@@ -33,7 +33,7 @@ body {
 <div id="container">
     <label for="projects" id="label">Choose a Project:</label>
 
-    <select name="projects" id="projects">
+    <select name="projects" id="projects" onchange="goProject()">
         <option value="" selected disabled>Select a project</option>
         <option value="Novelas">Novelas</option>
         <option value="PostListener">PostListener</option>
@@ -43,7 +43,8 @@ body {
 
 </div>
 <script>
+
 function goProject(page) {
-    if(page != "") window.location.href = window.origin + "/" + page;
+    if(page != "") window.location.href = window.origin + "/" + (page ?? this.value);
 }
 </script>
