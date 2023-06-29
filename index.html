@@ -45,6 +45,7 @@ body {
 <script>
 
 function goProject(page) {
+    console.log(this);
     if(page != "") window.location.href = window.origin + "/" + (page ?? this.value);
 }
 </script>
