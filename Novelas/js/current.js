@@ -12,6 +12,10 @@ textToSkip = [
     "“…”"
 ];
 
+if(sessionStorage.getItem("text")) {
+    document.getElementById('cuerpo').innerHTML = sessionStorage.getItem("text");
+}
+
 let skip = false, firefox = false, voice, utterance;
 
 if(navigator.userAgent.includes("Firefox") && navigator.userAgent.includes("Win64")) firefox = true;
