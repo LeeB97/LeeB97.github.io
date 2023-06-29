@@ -1,7 +1,8 @@
 'use strict';
 const synth = window.speechSynthesis,
-rate = 1.1161,
-volume = 1,
+volume = sessionStorage.getItem("voice-volume") ?? 1,
+rate = sessionStorage.getItem("voice-rate") ?? 1.1161,
+pitch = sessionStorage.getItem("voice-pitch") ?? 1,
 textToSkip = [
     "…",
     "...",
@@ -18,7 +19,11 @@ if(navigator.userAgent.includes("Firefox") && navigator.userAgent.includes("Win6
 // get voice stuff
 function populateVoice() {
     console.log('populateVoice',synth.getVoices());
-    voice = synth.getVoices().filter(el => { return el.name.includes('Zira') })[0];
+    if(sessionStorage.getItem("voice-selected")) {
+        voice = synth.getVoices().filter(el => { return el.name == sessionStorage.getItem("voice-selected") }).pop();
+    } else {
+        voice = synth.getVoices().filter(el => { return el.name.includes('Zira') }).pop();
+    }
     if(!voice) voice = synth.getVoices()[7];
     if(voice) console.log(voice.name);
 }
@@ -54,28 +59,41 @@ function createUtterance(element) {
         let s = new SpeechSynthesisUtterance;
         s.lang = 'en-US';
         s.text = element.textContent;
-        s.rate = rate;
         s.voice = voice;
         s.volume = volume;
+        s.rate = rate;
+        s.pitch = pitch;
         s.onstart = onstart;
         s.onend = onend;
+        s.onresume = onresume;
         s.element = element;
         
         return s;
     }
 }
 
+window.addEventListener('keydown', function(e) {
+    if(e.key == 'MediaPlayPause') {
+        if (synth.paused) synth.resume(utterance);
+        else if (synth.speaking) {
+            buttonState('pause');
+            synth.pause(utterance);
+        }
+    }
+})
+
 function onClickPlay() {
-    if (synth.speaking) return;
-    synth.speak(utterance);
+    if (synth.paused) synth.resume(utterance);
+    else if (synth.speaking) return;
+    else synth.speak(utterance);
     // console.log(utterance);
 }
 
 function onClickPause() {
     if (synth.speaking) {
         buttonState('pause');
-        skip = true;
-        synth.cancel(utterance);
+        // skip = true;
+        synth.pause(utterance);
     }
 }
 
@@ -127,6 +145,11 @@ function onend(e) {
     } else {
         onClickStop();
     }
+}
+
+function onresume(e) {
+    buttonState('play');
+    e.target.element.scrollIntoView({ behavior: 'smooth' });
 }
 
 function buttonState(state) {
