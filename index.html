@@ -39,13 +39,12 @@ body {
         <option value="PostListener">PostListener</option>
     </select>
 
-    <button id="button" onclick="goProject(document.getElementById('projects').value)">Go</button>
+    <button id="button" onclick="goProject()">Go</button>
 
 </div>
 <script>
-
-function goProject(page) {
-    console.log(this);
-    if(page != "") window.location.href = window.origin + "/" + (page ?? this.value);
+function goProject() {
+    console.log(document.getElementById('projects').value);
+    window.location.href = document.getElementById('projects').value;
 }
 </script>
