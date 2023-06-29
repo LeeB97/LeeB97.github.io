@@ -32,7 +32,10 @@ h1, p {
 }
 
 select, input {
-  padding: 5px 10px;
+  padding: 10px 15px;
+  background-color: #cfcfcf;
+  border: unset;
+  border-radius: 5px;
 }
 
 .controls {
@@ -73,8 +76,34 @@ select, input {
     padding: 10px 20px;
     border-radius: 5px;
     border: unset;
-    background-color: white;
+    background-color: #cfcfcf;
     cursor: pointer;
+}
+
+label {
+  background-color: #0060df;
+  color: white;
+  padding: 0.5rem;
+  font-family: sans-serif;
+  cursor: pointer;
+  border-radius: 0 5px 5px 0;
+}
+
+#file-chosen{
+    flex-grow: 1;
+    color: #2b2a33;
+    background-color: #cfcfcf;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding-right: 10px;
+    border-radius: 5px 0 0 5px;
+}
+.upload-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
 }
 </style>
 </head>
@@ -83,9 +112,13 @@ select, input {
     <h1>Options</h1>
 
     <p>Customize text-to-speech</p>
-    
+    <input type="file" id="actual-btn" hidden/>
     <div class="option-container">
         <input type="text" class="txt">
+        <div class="upload-container">
+            <div id="file-chosen">No file chosen</div>
+            <label for="actual-btn">Upload File</label>
+        </div>
         <div class="option-item">
             <div class="option-label">Volume</div>
             <div id="volume-value" class="option-value">1</div>
@@ -109,6 +142,7 @@ select, input {
         </div>
         
     </div>
+    <div id="fileContents"></div>
 
 <script>
 var synth = window.speechSynthesis;
@@ -215,15 +249,30 @@ function save() {
     sessionStorage.setItem("voice-volume",volume.value);
     sessionStorage.setItem("voice-rate",rate.value);
     sessionStorage.setItem("voice-pitch",pitch.value);
-    // let voice;
-    // for(i = 0; i < voices.length; i++) {
-    //   if(voices[i].name === selectedOption) {
-    //     voice = voices[i];
-    //     break;
-    //   }
-    // }
     window.location.href = "index.html";
 }
+
+const actualBtn = document.getElementById('actual-btn');
+const fileChosen = document.getElementById('file-chosen');
+actualBtn.addEventListener('change', function(e){
+    fileChosen.textContent = actualBtn.files[0].name;
+    var file = actualBtn.files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.readAsText(file, "UTF-8");
+        reader.onload = function (evt) {
+            // var xmlString = "<div id='foo'><a href='#'>Link</a><span></span></div>";
+            // var doc = new DOMParser().parseFromString(xmlString, "text/xml");
+            // console.log(doc.firstChild.innerHTML); // => <a href="#">Link...
+            // console.log(doc.firstChild.firstChild.innerHTML); // => Link
+            sessionStorage.setItem("text",evt.target.result);
+        }
+        reader.onerror = function (evt) {
+            document.getElementById("fileContents").innerHTML = "error reading file";
+        }
+    }
+});
+
 </script>
 </body>
 </html>
