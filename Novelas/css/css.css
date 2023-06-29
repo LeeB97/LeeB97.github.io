@@ -82,6 +82,34 @@ button {
     background-repeat: no-repeat;
 }
 
+#context-menu {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #2b2a33;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(37, 40, 42, 0.22);
+    color: #fff;
+    width: 10rem;
+    font-size: 1rem;
+    padding: .3rem 0;
+    position: fixed;
+    user-select: none;
+    display: none;
+}
+
+.context-item {
+    padding: 0.5rem 1rem;
+}
+.context-item:first-of-type {
+    border-radius: 5px 5px 0 0;
+}
+.context-item:last-of-type {
+    border-radius: 0 0 5px 5px;
+}
+.context-item:hover, .context-item:active, .context-item:focus {
+    background-color: #52525e;
+    cursor: pointer;
+}
+
 #play { background-image: url(../imagenes/Icons/Play/4.png); }
 #pause { background-image: url(../imagenes/Icons/Pause/4.png); }
 #stop { background-image: url(../imagenes/Icons/Stop/4.png); }
@@ -97,4 +125,3 @@ button {
 /* #stop:hover { background-image: url(../imagenes/Icons/Stop/5.png); } */
 #previous:hover { background-image: url(../imagenes/Icons/Previous/1.png); }
 #next:hover { background-image: url(../imagenes/Icons/Next/1.png); }
-
