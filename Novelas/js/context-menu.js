@@ -1,5 +1,27 @@
 'use strict';
-let items = ["Copy","Refresh","Options"]
+// let dialog = document.querySelector("#search")
+let dialog = document.createElement("dialog");
+let dialogDiv = document.createElement("div");
+dialog.id = "search";
+let dialogInput = document.createElement("input");
+dialogInput.id = "search-text";
+dialogInput.type = "text";
+let dialogButton = document.createElement("button");
+dialogButton.textContent = "Search";
+dialogDiv.appendChild(dialogInput)
+dialogDiv.appendChild(dialogButton)
+dialog.appendChild(dialogDiv)
+document.body.appendChild(dialog)
+dialogButton.addEventListener('click', function(e) {
+    let text = document.getElementById("search-text").value;
+    if(text != "") {
+        let elements = document.querySelectorAll('P');
+        let matches = Array.from(elements).filter(el => { return el.textContent.includes(text) });
+        if(matches.length > 0) matches[0].scrollIntoView();
+    }
+    dialog.close();
+});
+let items = ["Copy","Search","Refresh","Options"]
 let contextMenu = document.createElement('div');
 contextMenu.id = "context-menu";
 items.forEach(item => {
@@ -12,6 +34,9 @@ items.forEach(item => {
         switch (item) {
             case 'Copy':
                 document.execCommand('copy');
+                break;
+            case 'Search':
+                document.querySelector("#search").showModal();
                 break;
             case 'Refresh':
                 window.location.reload();
@@ -82,3 +107,8 @@ document.addEventListener("click", function (e) {
     contextMenu.style.display = "none";
     }
 });
+
+// window.addEventListener('click', function(e) {
+//     let outside = !dialog.contains(e.target);
+//     // if(outside) dialog.close();
+// });
