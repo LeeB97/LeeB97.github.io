@@ -96,8 +96,8 @@ function onClickPlay() {
 function onClickPause() {
     if (synth.speaking) {
         buttonState('pause');
-        // skip = true;
-        synth.pause(utterance);
+        skip = true;
+        synth.cancel(utterance);
     }
 }
 
