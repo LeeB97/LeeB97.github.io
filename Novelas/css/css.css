@@ -162,10 +162,7 @@ dialog::backdrop {
 }
 
 @media only screen and (max-width: 600px) {
-	.cuerpo {
+	.cuerpo, .context-item {
 		font-size: 1.5em;
-	}
-	.context-item {
-		font-size: 2em;
 	}
 }
