@@ -28,7 +28,7 @@ function populateVoice() {
     } else {
         voice = synth.getVoices().filter(el => { return el.name.includes('Zira') }).pop();
     }
-    if(!voice) voice = synth.getVoices()[7];
+    if(!voice) voice = synth.getVoices().filter(el => { return el.lang == 'en-US'}).pop();
     if(voice) console.log(voice.name);
 }
 
