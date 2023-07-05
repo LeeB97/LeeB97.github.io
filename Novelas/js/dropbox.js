@@ -2,6 +2,7 @@
 fetch('env.json')
 .then((response) => response.json())
 .then((env) => {
+  console.log(env.dropbox_token)
   var dbx = new Dropbox.Dropbox({ accessToken: env.dropbox_token });
   dbx.sharingGetSharedLinkFile({ url: env.dropbox_link })
     .then(function(data){
