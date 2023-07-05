@@ -1,5 +1,5 @@
 'use strict';
-var dbx = new Dropbox.Dropbox({ accessToken: 'sl.Bhm5LBmGi5BmJ_z2viNyKQbtKi2t7Lt4rZRs5UJlMtNSC1a3c9tlpuXeEpRzbGZ9A7sPSOmsBQnSbZFyV8qX_TDVfgLZC50Y5n9wBvAfYZd3UTYn5pNTuQNPWjdBhoG1bOLlRCjb' });
+var dbx = new Dropbox.Dropbox({ accessToken: 'sl.BhmDlXlf4LzztU_IPTaarxew_dWGprST_KkO01BhdmQl-m3P5K_KIAVD5pA6CV7JEet7pwdv-iS23nC8rDFifYyiFLvKlygeVKoofa5-ToF85P-PQXiwrfW9R3I4mBluIEaI_MP-' });
 
 dbx.sharingGetSharedLinkFile({url: 'https://www.dropbox.com/s/8ndtu5xb7gr6j2p/index.html?dl=0'})
   .then(function(data){
