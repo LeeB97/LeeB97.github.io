@@ -1,5 +1,5 @@
 'use strict';
-const token = 'sl.Bhmq7P7O6WTq4OZ8s6IWWZj83zfngq2FPzWOJnVRJ_i5iEmny9NEFfBUj5pzOil9bacNyn17liBVV08ds6pZQPV6P5DmlwLpamudWIseBNjj99UWlnwwv7Dy5uuB_NqeRnBMGZlVIYoA';
+const token = 'sl.BhlP6rUCOvbq0hLTJk5U4IOzK8-cntGccWJZES7qu6UAMU1CW3T3nW5mCPO4KJDULV0LmNCUIgR4hPVrXmQ5tVKsj9Kwhb5FY2ENe3dU3ArYh_BYxSNLZk97PERLsa_P0YIUGhIH';
 var dbx = new Dropbox.Dropbox({ accessToken: token });
 dbx.sharingGetSharedLinkFile({url: 'https://www.dropbox.com/s/8ndtu5xb7gr6j2p/index.html?dl=0'})
   .then(function(data){
