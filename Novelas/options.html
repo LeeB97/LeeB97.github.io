@@ -271,7 +271,7 @@ actualBtn.addEventListener('change', function(e){
         if(text) {
           sessionStorage.setItem("text",doc.querySelector('#cuerpo').innerHTML);
         } else {
-          '<p>' + doc.textContent.split('\n').map(el => el.trim()).filter(el=> el != '').join('</p>\n<p>') + '</p>';
+          sessionStorage.setItem("text","<p>" + doc.textContent.split('\n').map(el => el.trim()).filter(el => el != '').join('</p>\n<p>') + "</p>");
         }
       }
       reader.onerror = function (evt) {
