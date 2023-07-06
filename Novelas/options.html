@@ -258,20 +258,25 @@ actualBtn.addEventListener('change', function(e){
     fileChosen.textContent = actualBtn.files[0].name;
     var file = actualBtn.files[0];
     if (file) {
-        var reader = new FileReader();
-        reader.readAsText(file, "UTF-8");
-        reader.onload = function (evt) {
-            // var xmlString = "<div id='foo'><a href='#'>Link</a><span></span></div>";
-            // var doc = new DOMParser().parseFromString(xmlString, "text/xml");
-            // console.log(doc.firstChild.innerHTML); // => <a href="#">Link...
-            // console.log(doc.firstChild.firstChild.innerHTML); // => Link
-            var htmlString = reader.result;
-            var doc = new DOMParser().parseFromString(htmlString, "text/html");
-            sessionStorage.setItem("text",doc.querySelector('#cuerpo').innerHTML);
+      var reader = new FileReader();
+      reader.readAsText(file, "UTF-8");
+      reader.onload = function (evt) {
+        // var xmlString = "<div id='foo'><a href='#'>Link</a><span></span></div>";
+        // var doc = new DOMParser().parseFromString(xmlString, "text/xml");
+        // console.log(doc.firstChild.innerHTML); // => <a href="#">Link...
+        // console.log(doc.firstChild.firstChild.innerHTML); // => Link
+        var htmlString = reader.result;
+        var doc = new DOMParser().parseFromString(htmlString, "text/html");
+        let text = doc.querySelector('#cuerpo');
+        if(text) {
+          sessionStorage.setItem("text",doc.querySelector('#cuerpo').innerHTML);
+        } else {
+          '<p>' + doc.textContent.split('\n').map(el => el.trim()).filter(el=> el != '').join('</p>\n<p>') + '</p>';
         }
-        reader.onerror = function (evt) {
-            document.getElementById("fileContents").innerHTML = "error reading file";
-        }
+      }
+      reader.onerror = function (evt) {
+        fileChosen.textContent = "error reading file";
+      }
     }
 });
 
