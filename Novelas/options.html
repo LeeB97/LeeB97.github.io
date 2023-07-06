@@ -160,8 +160,8 @@ var pitchValue = document.querySelector('#pitch-value');
 
 volume.value = sessionStorage.getItem("voice-volume") ?? 1;
 volumeValue.textContent = sessionStorage.getItem("voice-volume") ?? 1;
-rate.value = sessionStorage.getItem("voice-rate") ?? 1.116;
-rateValue.textContent = sessionStorage.getItem("voice-rate") ?? 1.116;
+rate.value = sessionStorage.getItem("voice-rate") ?? 1;
+rateValue.textContent = sessionStorage.getItem("voice-rate") ?? 1;
 pitch.value = sessionStorage.getItem("voice-pitch") ?? 1;
 pitchValue.textContent = sessionStorage.getItem("voice-pitch") ?? 1;
 var voices = [];
@@ -265,7 +265,9 @@ actualBtn.addEventListener('change', function(e){
             // var doc = new DOMParser().parseFromString(xmlString, "text/xml");
             // console.log(doc.firstChild.innerHTML); // => <a href="#">Link...
             // console.log(doc.firstChild.firstChild.innerHTML); // => Link
-            sessionStorage.setItem("text",evt.target.result);
+            var htmlString = reader.result;
+            var doc = new DOMParser().parseFromString(htmlString, "text/html");
+            sessionStorage.setItem("text",doc.querySelector('#cuerpo').innerHTML);
         }
         reader.onerror = function (evt) {
             document.getElementById("fileContents").innerHTML = "error reading file";
