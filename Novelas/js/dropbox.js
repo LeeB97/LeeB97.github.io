@@ -1,17 +1,35 @@
 'use strict';
 const env = {
-  "dropbox_token": "sl.BhmERHs43wn0au60jqFQ6A0h_kSFZX4nVx3ZOhnjq8Cx6tKxrAzEm--flbZ_7ftcC9f-tWHLJaLxdWWeTZNlBQFS2HPKIh1u2BE45kkRwyWG_8Dyci8pOBRN_ovuq-Fv4zoU8ykX",
+  "dropbox_token": "",
   "dropbox_link": "https://www.dropbox.com/s/8ndtu5xb7gr6j2p/index.html?dl=0",
 }
-var dbx = new Dropbox.Dropbox({ accessToken: env.dropbox_token });
-dbx.sharingGetSharedLinkFile({ url: env.dropbox_link })
-  .then(function(data){
-    const reader = new FileReader();
-    reader.onload = function() {
-      var htmlString = reader.result;
-      var doc = new DOMParser().parseFromString(htmlString, "text/html");
-      document.querySelector('#cuerpo').innerHTML = doc.querySelector('#cuerpo').innerHTML;
-    }
-    reader.readAsText(data.fileBlob)
-  }
-)
+if(sessionStorage.getItem("dropbox_link")) env.dropbox_link = sessionStorage.getItem("dropbox_link");
+fetch(env.dropbox_link)
+.then(response => response.blob())
+.then(blob => {
+  const reader = new FileReader();
+  reader.onload = () => {
+    const fileContent = reader.result;
+    const doc = new DOMParser().parseFromString(fileContent, "text/html");
+    const text = doc.querySelector('#cuerpo');
+    if(text) sessionStorage.setItem("text",doc.querySelector('#cuerpo').innerHTML);
+  };
+  reader.readAsText(blob);
+})
+.catch(error => {
+  console.log('Error reading the file:', error);
+});
+
+
+// var dbx = new Dropbox.Dropbox({ accessToken: env.dropbox_token });
+// dbx.sharingGetSharedLinkFile({ url: env.dropbox_link })
+//   .then(function(data){
+//     const reader = new FileReader();
+//     reader.onload = function() {
+//       var htmlString = reader.result;
+//       var doc = new DOMParser().parseFromString(htmlString, "text/html");
+//       document.querySelector('#cuerpo').innerHTML = doc.querySelector('#cuerpo').innerHTML;
+//     }
+//     reader.readAsText(data.fileBlob)
+//   }
+// )
