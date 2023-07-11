@@ -114,7 +114,8 @@ label {
     <p>Customize text-to-speech</p>
     <input type="file" id="actual-btn" hidden/>
     <div class="option-container">
-        <input type="text" class="txt">
+        <input type="text" class="txt" placeholder="Input text to test text-to-speech">
+        <input type="text" name="dropbox_link" id="dropbox_link" placeholder="https://www.dropbox.com/s/8ndtu5xb7gr6j2p/index.html?dl=0">
         <div class="upload-container">
             <div id="file-chosen">No file chosen</div>
             <label for="actual-btn">Upload File</label>
@@ -151,6 +152,7 @@ var inputForm = document.querySelector('form');
 var inputTxt = document.querySelector('.txt');
 var voiceSelect = document.querySelector('select');
 
+var dropbox_link = document.querySelector('#dropbox_link');
 var volume = document.querySelector('#volume');
 var volumeValue = document.querySelector('#volume-value');
 var rate = document.querySelector('#rate');
@@ -245,6 +247,11 @@ function back() {
 
 function save() {
     let selectedVoice = voiceSelect.selectedOptions[0].getAttribute('data-name');
+    if(dropbox_link.value != '') {
+      let dropVal = dropbox_link.value.split("https://www.dropbox.com").join("");
+      dropVal = 'https://dl.dropboxusercontent.com'+dropVal;
+      sessionStorage.setItem("dropbox_link",dropVal);
+    }
     sessionStorage.setItem("voice-selected",selectedVoice);
     sessionStorage.setItem("voice-volume",volume.value);
     sessionStorage.setItem("voice-rate",rate.value);
