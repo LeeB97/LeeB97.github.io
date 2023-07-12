@@ -1,7 +1,7 @@
 'use strict';
 const env = {
   "dropbox_token": "",
-  "dropbox_link": "https://www.dropbox.com/s/8ndtu5xb7gr6j2p/index.html?dl=0",
+  "dropbox_link": "https://dl.dropboxusercontent.com/s/8ndtu5xb7gr6j2p/index.html?dl=0",
 }
 if(sessionStorage.getItem("dropbox_link")) env.dropbox_link = sessionStorage.getItem("dropbox_link");
 fetch(env.dropbox_link)
