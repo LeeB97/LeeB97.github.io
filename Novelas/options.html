@@ -248,8 +248,12 @@ function back() {
 function save() {
     let selectedVoice = voiceSelect.selectedOptions[0].getAttribute('data-name');
     if(dropbox_link.value != '') {
-      let dropVal = dropbox_link.value.split("https://www.dropbox.com").join("");
-      dropVal = 'https://dl.dropboxusercontent.com'+dropVal;
+      let dropVal = "";
+      if(dropbox_link.value.includes("https://www.dropbox.com")) {
+        dropVal = 'https://dl.dropboxusercontent.com'+dropbox_link.value.split("https://www.dropbox.com").join("");
+      } else {
+        dropVal = dropbox_link.value;
+      }
       sessionStorage.setItem("dropbox_link",dropVal);
     }
     sessionStorage.setItem("voice-selected",selectedVoice);
