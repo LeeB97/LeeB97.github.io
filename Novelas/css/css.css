@@ -55,16 +55,16 @@ a {
 } */
 .botones {
 	position: fixed; 
-	bottom: 2%;
-	left: 2%;
-	border-radius: 10px;
-	background-color: skyblue;
-	padding: 10px;
+	bottom: 0;
+	left: 0;
+	border-radius: 0 20px 0 0;
+	background-color: azure;
+	padding: 10px 15px 10px 10px;
 	user-select: none;
 	display:flex;
 	align-items:center;
 }
-button {
+.botones button {
 	/* border-radius: 50%; */
 	background-color: inherit;
 	border: none;
@@ -76,8 +76,6 @@ button {
     background-size: contain;
     background-repeat: no-repeat;
 }
-
-
 .menu {
 	all: none;
     width: 40px;
