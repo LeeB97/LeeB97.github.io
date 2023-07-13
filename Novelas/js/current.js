@@ -1,7 +1,7 @@
 'use strict';
 const synth = window.speechSynthesis,
 volume = sessionStorage.getItem("voice-volume") ?? 1,
-rate = sessionStorage.getItem("voice-rate") ?? 1.1161,
+rate = sessionStorage.getItem("voice-rate") ?? 1, //1.1161,
 pitch = sessionStorage.getItem("voice-pitch") ?? 1,
 textToSkip = [
     "…",
@@ -14,7 +14,7 @@ textToSkip = [
 
 setTimeout(function() {
     if(sessionStorage.getItem("text")) document.getElementById('cuerpo').innerHTML = sessionStorage.getItem("text");
-}, 2000);
+}, 1000);
 
 let skip = false, firefox = false, voice, utterance;
 
