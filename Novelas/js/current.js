@@ -37,8 +37,6 @@ if ('onvoiceschanged' in synth) synth.onvoiceschanged = populateVoice;
 
 populateVoice();
 
-utterance = createUtterance(document.querySelector('#cuerpo').firstElementChild);
-
 document.getElementById('cuerpo').addEventListener('dblclick', e => {
     let element = e.target;
     if(element.id == 'cuerpo') return;
@@ -56,7 +54,7 @@ document.getElementById('cuerpo').addEventListener('dblclick', e => {
 });
 
 function createUtterance(element) {
-    let text = element.textContent || "";
+    let text = element?.textContent || "";
     if(textToSkip.includes(text)) {
         return createUtterance(element.nextElementSibling)
     } else {
@@ -87,6 +85,7 @@ window.addEventListener('keydown', function(e) {
 })
 
 function onClickPlay() {
+    if(!utterance) utterance = createUtterance(document.querySelector('#cuerpo').firstElementChild);
     if (synth.paused) synth.resume(utterance);
     else if (synth.speaking) return;
     else synth.speak(utterance);
