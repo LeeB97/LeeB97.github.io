@@ -13,7 +13,9 @@ textToSkip = [
 ];
 
 if(sessionStorage.getItem("text")) {
-    document.getElementById('cuerpo').innerHTML = sessionStorage.getItem("text");
+    setTimeout(function() {
+        document.getElementById('cuerpo').innerHTML = sessionStorage.getItem("text");
+    }, 1000);
 }
 
 let skip = false, firefox = false, voice, utterance;
