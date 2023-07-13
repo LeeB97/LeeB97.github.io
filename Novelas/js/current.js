@@ -56,13 +56,13 @@ document.getElementById('cuerpo').addEventListener('dblclick', e => {
 });
 
 function createUtterance(element) {
-    let text = element.textContent;
+    let text = element.textContent || "";
     if(textToSkip.includes(text)) {
         return createUtterance(element.nextElementSibling)
     } else {
         let s = new SpeechSynthesisUtterance;
         s.lang = 'en-US';
-        s.text = element.textContent;
+        s.text = text;
         s.voice = voice;
         s.volume = volume;
         s.rate = rate;
