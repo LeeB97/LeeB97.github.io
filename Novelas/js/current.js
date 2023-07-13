@@ -12,11 +12,9 @@ textToSkip = [
     "“…”"
 ];
 
-if(sessionStorage.getItem("text")) {
-    setTimeout(function() {
-        document.getElementById('cuerpo').innerHTML = sessionStorage.getItem("text");
-    }, 1000);
-}
+setTimeout(function() {
+    if(sessionStorage.getItem("text")) document.getElementById('cuerpo').innerHTML = sessionStorage.getItem("text");
+}, 2000);
 
 let skip = false, firefox = false, voice, utterance;
 
