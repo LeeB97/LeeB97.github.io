@@ -77,7 +77,7 @@ a {
     background-repeat: no-repeat;
 }
 .menu {
-	all: none;
+    cursor: pointer;
     width: 40px;
     height: 40px;
     background-color: #fff;
