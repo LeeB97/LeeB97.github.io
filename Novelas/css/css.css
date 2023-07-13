@@ -147,6 +147,7 @@ button {
 }
 .menu .button {
     user-select: none;
+	pointer-events: none;
     background-color: #000;
     cursor: pointer;
     background: #fff;

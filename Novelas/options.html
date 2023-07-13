@@ -60,7 +60,7 @@ select, input {
     flex-grow: 1;
 }
 .option-value {
-    min-width: 40px;
+    max-width: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -115,25 +115,25 @@ label {
     <input type="file" id="actual-btn" hidden/>
     <div class="option-container">
         <input type="text" class="txt" placeholder="Input text to test text-to-speech">
-        <input type="text" name="dropbox_link" id="dropbox_link" placeholder="https://www.dropbox.com/s/8ndtu5xb7gr6j2p/index.html?dl=0">
+        <input type="text" name="share_link" id="share_link" placeholder="https://www.dropbox.com/s/8ndtu5xb7gr6j2p/index.html?dl=0">
         <div class="upload-container">
             <div id="file-chosen">No file chosen</div>
             <label for="actual-btn">Upload File</label>
         </div>
         <div class="option-item">
             <div class="option-label">Volume</div>
-            <div id="volume-value" class="option-value">1</div>
-            <input type="range" min="0" max="2" step="0.1" id="volume">
+            <input type="number" id="volume" class="option-value" min="0" max="2" value="1">
+            <input type="range" id="volume-radio" min="0" max="2" step="0.1" value="1" onchange="handleChange(this)">
         </div>
         <div class="option-item">
             <div class="option-label">Rate</div>
-            <div id="rate-value" class="option-value">1</div>
-            <input type="range" min="0.8" max="1.3" step="0.001" id="rate" value="1">
+            <input type="number" id="rate" class="option-value" min="0.8" max="1.3" value="1">
+            <input type="range" id="rate-radio" min="0.8" max="1.3" step="0.001" value="1" onchange="handleChange(this)">
         </div>
         <div class="option-item">
             <div class="option-label">Pitch</div>
-            <div id="pitch-value" class="option-value">1</div>
-            <input type="range" min="0" max="2" step="0.1" id="pitch" value="1">
+            <input type="number" id="pitch" class="option-value" min="0" max="2" value="1">
+            <input type="range" id="pitch-radio" min="0" max="2" step="0.1" value="1" onchange="handleChange(this)">
         </div>
         <select></select>
         <div class="controls">
@@ -146,26 +146,23 @@ label {
     <div id="fileContents"></div>
 
 <script>
+function handleChange(el) {
+  el.previousElementSibling.value = el.value;
+}
 var synth = window.speechSynthesis;
 
 var inputForm = document.querySelector('form');
 var inputTxt = document.querySelector('.txt');
 var voiceSelect = document.querySelector('select');
 
-var dropbox_link = document.querySelector('#dropbox_link');
+var share_link = document.querySelector('#share_link');
 var volume = document.querySelector('#volume');
-var volumeValue = document.querySelector('#volume-value');
 var rate = document.querySelector('#rate');
-var rateValue = document.querySelector('#rate-value');
 var pitch = document.querySelector('#pitch');
-var pitchValue = document.querySelector('#pitch-value');
 
 volume.value = sessionStorage.getItem("voice-volume") ?? 1;
-volumeValue.textContent = sessionStorage.getItem("voice-volume") ?? 1;
 rate.value = sessionStorage.getItem("voice-rate") ?? 1;
-rateValue.textContent = sessionStorage.getItem("voice-rate") ?? 1;
 pitch.value = sessionStorage.getItem("voice-pitch") ?? 1;
-pitchValue.textContent = sessionStorage.getItem("voice-pitch") ?? 1;
 var voices = [];
 
 function populateVoiceList() {
@@ -228,18 +225,6 @@ function speak(){
   }
 }
 
-pitch.onchange = function() {
-  pitchValue.textContent = pitch.value;
-}
-
-rate.onchange = function() {
-  rateValue.textContent = rate.value;
-}
-
-volume.onchange = function() {
-  volumeValue.textContent = volume.value;
-}
-
 function back() {
     sessionStorage.clear();
     window.location.href = "index.html";
@@ -247,14 +232,14 @@ function back() {
 
 function save() {
     let selectedVoice = voiceSelect.selectedOptions[0].getAttribute('data-name');
-    if(dropbox_link.value != '') {
+    if(share_link.value != '') {
       let dropVal = "";
-      if(dropbox_link.value.includes("https://www.dropbox.com")) {
-        dropVal = 'https://dl.dropboxusercontent.com'+dropbox_link.value.split("https://www.dropbox.com").join("");
+      if(share_link.value.includes("https://www.dropbox.com")) {
+        dropVal = 'https://dl.dropboxusercontent.com'+share_link.value.split("https://www.dropbox.com").join("");
       } else {
-        dropVal = dropbox_link.value;
+        dropVal = share_link.value;
       }
-      sessionStorage.setItem("dropbox_link",dropVal);
+      sessionStorage.setItem("share_link",dropVal);
     }
     sessionStorage.setItem("voice-selected",selectedVoice);
     sessionStorage.setItem("voice-volume",volume.value);
