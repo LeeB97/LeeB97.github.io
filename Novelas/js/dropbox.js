@@ -12,8 +12,12 @@ fetch(env.dropbox_link)
     const fileContent = reader.result;
     const doc = new DOMParser().parseFromString(fileContent, "text/html");
     const text = doc.querySelector('#cuerpo');
-    if(text) sessionStorage.setItem("text",doc.querySelector('#cuerpo').innerHTML);
-  };
+    if(text) {
+      sessionStorage.setItem("text",doc.querySelector('#cuerpo').innerHTML);
+    } else {
+      sessionStorage.setItem("text","<p>" + doc.body.textContent.split('\n').map(el => el.trim()).filter(el => el != '').join('</p>\n<p>') + "</p>");
+    }
+  }
   reader.readAsText(blob);
 })
 .catch(error => {
