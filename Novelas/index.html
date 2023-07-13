@@ -12,7 +12,7 @@
 
     <script src="js/dropbox.js"></script>
     <script defer src="js/current.js"></script>
-    <script defer src="js/context-menu.js"></script>
+    <script defer src="js/menu.js"></script>
 
 </head>
 
@@ -23,6 +23,17 @@
     <button id="stop" onclick="onClickStop()"></button>&nbsp;
     <button id="previous" onclick="moveParagraph(false)"></button>&nbsp;
     <button id="next" onclick="moveParagraph(true)"></button>
+</div>
+<dialog id="search">
+    <div>
+        <input id="search-text" type="text">
+        <button>Search</button>
+    </div>
+</dialog>
+<div class="menu" onclick="this.classList.toggle('open')">
+    <div class="button" onclick="window.open('options.html','_self')"><img src="imagenes/Icons/options.svg"></div>
+    <div class="button" onclick="window.location.reload()"><img src="imagenes/Icons/reload.svg"></div>
+    <div class="button" onclick="document.querySelector('#search').showModal()"><img src="imagenes/Icons/search.svg"></div>
 </div>
 <div class="cuerpo" id="cuerpo">
 

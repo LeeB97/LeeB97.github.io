@@ -40,9 +40,9 @@ a {
 	color: lightgreen;
 }
 ::-webkit-scrollbar {
-	width: 20px;
+	display: none;
 }
-::-webkit-scrollbar-track {
+/* ::-webkit-scrollbar-track {
 	box-shadow: inset 0 0 5px grey;
 	border-radius: 10px;
 }
@@ -52,7 +52,7 @@ a {
 }
 ::-webkit-scrollbar-button {
 	height: 20%;
-}
+} */
 .botones {
 	position: fixed; 
 	bottom: 2%;
@@ -77,35 +77,94 @@ button {
     background-repeat: no-repeat;
 }
 
-#context-menu {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #2b2a33;
-    border-radius: 5px;
-    box-shadow: 0 0 20px rgba(37, 40, 42, 0.22);
-    color: #fff;
-    width: 10rem;
-    font-size: 1rem;
-    padding: .3rem 0;
+
+.menu {
+	all: none;
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    border-radius: 50% 0 0;
     position: fixed;
+    bottom: 0;
+    right: 0;
+	opacity: .75;
+}
+.menu::before, .menu::after {
+    content: "";
+    background: #c3c2c7;
+    border-radius: 5px;
+    width: 25px;
+    height: 5px;
+    position: absolute;
+    left: 9px;
+    top: 20px;
+    transition: 0.2s ease;
+    z-index: 1;
+}
+.menu::before {
+    transform: rotate(0deg);
+}
+.menu::after {
+    transform: rotate(-90deg);
+}
+.menu.open {
+    opacity: 1;
+}
+.menu.open::before {
+    transform: rotate(45deg);
+}
+.menu.open::after {
+    transform: rotate(-45deg);
+}
+.menu.open .button {
+    z-index: 1;
+    opacity: 1;
+    pointer-events: auto;
+}
+.menu.open .button:first-of-type {
+    padding: 10px 8px 0px 8px;
+    border-radius: 0 50% 0 0;
+    bottom: 0px;
+    right: 45px;
+    background: #fff;
+    transition: 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28), 0.2s ease opacity, 0.2s cubic-bezier(0.08, 0.82, 0.17, 1) transform;
+}
+.menu.open .button:nth-of-type(2) {
+    padding: 8px;
+    border-radius: 50% 0;
+    bottom: 45px;
+    right: 45px;
+    background:#fff;
+    transition: 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28), 0.3s ease opacity, 0.3s cubic-bezier(0.08, 0.82, 0.17, 1) transform;
+}
+.menu.open .button:last-of-type {
+    padding: 9px 6px 7px 9px;
+    border-radius: 0 0 0 50%;
+    bottom: 45px;
+    right: 0;
+    background: #fff;
+    transition: 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28), 0.2s ease opacity, 0.2s cubic-bezier(0.08, 0.82, 0.17, 1) transform;
+}
+.menu .button {
     user-select: none;
-    display: none;
-}
-
-.context-item {
-    padding: 0.5rem 1rem;
-	font-size: 1em;
-}
-.context-item:first-of-type {
-    border-radius: 5px 5px 0 0;
-}
-.context-item:last-of-type {
-    border-radius: 0 0 5px 5px;
-}
-.context-item:hover, .context-item:active, .context-item:focus {
-    background-color: #52525e;
+    background-color: #000;
     cursor: pointer;
+    background: #fff;
+    position: absolute;
+    z-index: -1;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+    box-shadow: inherit;
+    
 }
-
+.menu .button img {
+	width: 25px;
+	height: 25px;
+}
+.menu .button:hover, .menu .button:active {
+    transform: scale(1.05);
+}
 dialog {
 	font-size: 1rem;
 	padding: 15px;
@@ -137,7 +196,38 @@ dialog > div input {
 }
 dialog::backdrop {
 	display: none;
+} 
+
+/* Old context manu */
+/* #context-menu {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #2b2a33;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(37, 40, 42, 0.22);
+    color: #fff;
+    width: 10rem;
+    font-size: 1rem;
+    padding: .3rem 0;
+    position: fixed;
+    user-select: none;
+    display: none;
 }
+
+.context-item {
+    padding: 0.5rem 1rem;
+	font-size: 1em;
+}
+.context-item:first-of-type {
+    border-radius: 5px 5px 0 0;
+}
+.context-item:last-of-type {
+    border-radius: 0 0 5px 5px;
+}
+.context-item:hover, .context-item:active, .context-item:focus {
+    background-color: #52525e;
+    cursor: pointer;
+}
+*/
 
 #play { background-image: url(../imagenes/Icons/Play/4.png); }
 #pause { background-image: url(../imagenes/Icons/Pause/4.png); }
