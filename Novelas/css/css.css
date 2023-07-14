@@ -193,9 +193,9 @@ dialog > div button:active {
 dialog > div input {
 	padding-left: 5px;
 }
-dialog::backdrop {
+/* dialog::backdrop {
 	display: none;
-} 
+}  */
 
 /* Old context manu */
 /* #context-menu {
