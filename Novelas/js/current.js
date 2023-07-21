@@ -3,6 +3,7 @@ const synth = window.speechSynthesis,
 volume = sessionStorage.getItem("voice-volume") ?? 1,
 rate = sessionStorage.getItem("voice-rate") ?? 1, //1.1161,
 pitch = sessionStorage.getItem("voice-pitch") ?? 1,
+share_link: "https://dl.dropboxusercontent.com/s/8ndtu5xb7gr6j2p/index.html?dl=0",
 textToSkip = [
     "…",
     "...",
@@ -12,10 +13,9 @@ textToSkip = [
     "“…”"
 ];
 
-setTimeout(function() {
-    if(sessionStorage.getItem("local-text")) document.getElementById('cuerpo').innerHTML = sessionStorage.getItem("local-text");
-    else if(sessionStorage.getItem("text")) document.getElementById('cuerpo').innerHTML = sessionStorage.getItem("text");
-}, 2000);
+if(sessionStorage.getItem("local-text")) document.getElementById('cuerpo').innerHTML = sessionStorage.getItem("local-text");
+else if(sessionStorage.getItem("share_link")) loadCloudFile(sessionStorage.getItem("share_link"));
+else loadCloudFile(share_link);
 
 let skip = false, firefox = false, voice, utterance;
 
@@ -174,4 +174,31 @@ function buttonState(state) {
         default:
             break;
     }
+}
+
+function loadCloudFile(link) {
+    fetch(link)
+    .then(response => response.blob())
+    .then(blob => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const fileContent = reader.result;
+        const doc = new DOMParser().parseFromString(fileContent, "text/html");
+        const text = doc.querySelector('#cuerpo');
+        if(text) {
+          localStorage.setItem("text",doc.querySelector('#cuerpo').innerHTML);
+          document.getElementById('cuerpo').innerHTML = localStorage.getItem("text");
+        } else {
+          localStorage.setItem("text","<p>" + doc.body.textContent.split('\n').map(el => el.trim()).filter(el => el != '').join('</p>\n<p>') + "</p>");
+          document.getElementById('cuerpo').innerHTML = localStorage.getItem("text");
+        }
+      }
+      reader.onerror = () => {
+          document.getElementById('cuerpo').innerHTML = localStorage.getItem("text");
+      }
+      reader.readAsText(blob);
+    })
+    .catch(error => {
+      console.log('Error reading the file:', error);
+    });
 }
