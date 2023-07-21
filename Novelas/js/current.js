@@ -13,9 +13,11 @@ textToSkip = [
     "“…”"
 ];
 
-if(sessionStorage.getItem("local-text")) document.getElementById('cuerpo').innerHTML = sessionStorage.getItem("local-text");
-else if(sessionStorage.getItem("share_link")) loadCloudFile(sessionStorage.getItem("share_link"));
-else loadCloudFile(share_link);
+setTimeout(() => {
+    if(sessionStorage.getItem("local-text")) document.getElementById('cuerpo').innerHTML = sessionStorage.getItem("local-text");
+    else if(sessionStorage.getItem("share_link")) loadCloudFile(sessionStorage.getItem("share_link"));
+    else loadCloudFile(share_link);
+}, 2000);
 
 let skip = false, firefox = false, voice, utterance;
 
@@ -177,6 +179,7 @@ function buttonState(state) {
 }
 
 function loadCloudFile(link) {
+    console.log("loadCloudFile",link)
     fetch(link)
     .then(response => response.blob())
     .then(blob => {
@@ -193,7 +196,8 @@ function loadCloudFile(link) {
           document.getElementById('cuerpo').innerHTML = localStorage.getItem("text");
         }
       }
-      reader.onerror = () => {
+      reader.onerror = (e) => {
+          console.error(e)
           document.getElementById('cuerpo').innerHTML = localStorage.getItem("text");
       }
       reader.readAsText(blob);
