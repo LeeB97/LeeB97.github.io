@@ -13,7 +13,8 @@ textToSkip = [
 ];
 
 setTimeout(function() {
-    if(sessionStorage.getItem("text")) document.getElementById('cuerpo').innerHTML = sessionStorage.getItem("text");
+    if(sessionStorage.getItem("local-text")) document.getElementById('cuerpo').innerHTML = sessionStorage.getItem("local-text");
+    else if(sessionStorage.getItem("text")) document.getElementById('cuerpo').innerHTML = sessionStorage.getItem("text");
 }, 2000);
 
 let skip = false, firefox = false, voice, utterance;
