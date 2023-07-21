@@ -13,11 +13,9 @@ textToSkip = [
     "“…”"
 ];
 
-setTimeout(() => {
-    if(sessionStorage.getItem("local-text")) document.getElementById('cuerpo').innerHTML = sessionStorage.getItem("local-text");
-    else if(sessionStorage.getItem("share_link")) loadCloudFile(sessionStorage.getItem("share_link"));
-    else loadCloudFile(share_link);
-}, 2000);
+if(sessionStorage.getItem("local-text")) document.getElementById('cuerpo').innerHTML = sessionStorage.getItem("local-text");
+else if(sessionStorage.getItem("share_link")) loadCloudFile(sessionStorage.getItem("share_link"));
+else loadCloudFile(share_link);
 
 let skip = false, firefox = false, voice, utterance;
 
