@@ -265,9 +265,9 @@ actualBtn.addEventListener('change', function(e){
         var doc = new DOMParser().parseFromString(htmlString, "text/html");
         let text = doc.querySelector('#cuerpo');
         if(text) {
-          sessionStorage.setItem("text",doc.querySelector('#cuerpo').innerHTML);
+          sessionStorage.setItem("local-text",doc.querySelector('#cuerpo').innerHTML);
         } else {
-          sessionStorage.setItem("text","<p>" + doc.body.textContent.split('\n').map(el => el.trim()).filter(el => el != '').join('</p>\n<p>') + "</p>");
+          sessionStorage.setItem("local-text","<p>" + doc.body.textContent.split('\n').map(el => el.trim()).filter(el => el != '').join('</p>\n<p>') + "</p>");
         }
       }
       reader.onerror = function (evt) {
