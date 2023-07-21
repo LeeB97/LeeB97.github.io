@@ -189,11 +189,11 @@ function loadCloudFile(link) {
         const doc = new DOMParser().parseFromString(fileContent, "text/html");
         const text = doc.querySelector('#cuerpo');
         if(text) {
-          localStorage.setItem("text",doc.querySelector('#cuerpo').innerHTML);
-          document.getElementById('cuerpo').innerHTML = localStorage.getItem("text");
+            localStorage.setItem("text",doc.querySelector('#cuerpo').innerHTML);
+            document.getElementById('cuerpo').innerHTML = localStorage.getItem("text");
         } else {
-          localStorage.setItem("text","<p>" + doc.body.textContent.split('\n').map(el => el.trim()).filter(el => el != '').join('</p>\n<p>') + "</p>");
-          document.getElementById('cuerpo').innerHTML = localStorage.getItem("text");
+            localStorage.setItem("text","<p>" + doc.body.textContent.split('\n').map(el => el.trim()).filter(el => el != '').join('</p>\n<p>') + "</p>");
+            document.getElementById('cuerpo').innerHTML = localStorage.getItem("text");
         }
       }
       reader.onerror = (e) => {
@@ -203,6 +203,7 @@ function loadCloudFile(link) {
       reader.readAsText(blob);
     })
     .catch(error => {
-      console.log('Error reading the file:', error);
+        console.log('Error reading the file:', error);
+        document.getElementById('cuerpo').innerHTML = localStorage.getItem("text");
     });
 }
