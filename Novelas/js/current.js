@@ -1,6 +1,6 @@
 'use strict';
 const synth = window.speechSynthesis,
-volume = sessionStorage.getItem("voice-volume") ?? 1,
+volume = sessionStorage.getItem("voice-volume") ?? 0.95,
 rate = sessionStorage.getItem("voice-rate") ?? 1, //1.1161,
 pitch = sessionStorage.getItem("voice-pitch") ?? 1,
 share_link = "https://dl.dropboxusercontent.com/s/8ndtu5xb7gr6j2p/index.html?dl=0",
