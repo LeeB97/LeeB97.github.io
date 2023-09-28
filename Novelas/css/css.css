@@ -29,7 +29,7 @@ body {
 	background-color: rgba(255, 255, 255, 0.03);
 } */
 p {
-	padding: 0.7346em 10px;
+	padding: 20px 0.7346em 0px 0.7346em;
 }
 tbody tr td{
 	border: 1px solid;
