@@ -56,7 +56,21 @@ document.getElementById('cuerpo').addEventListener('dblclick', e => {
 
 function createUtterance(element) {
     let text = element?.textContent || "";
-    if(textToSkip.includes(text)) {
+    let s = new SpeechSynthesisUtterance;
+    s.lang = 'en-US';
+    s.text = text;
+    s.voice = voice;
+    s.volume = volume;
+    s.rate = rate;
+    s.pitch = pitch;
+    s.onstart = onstart;
+    s.onend = onend;
+    s.onresume = onresume;
+    s.element = element;
+        
+    return s;
+    
+    /*if(textToSkip.includes(text)) {
         return createUtterance(element.nextElementSibling)
     } else {
         let s = new SpeechSynthesisUtterance;
@@ -72,7 +86,7 @@ function createUtterance(element) {
         s.element = element;
         
         return s;
-    }
+    }*/
 }
 
 window.addEventListener('keydown', function(e) {
@@ -119,10 +133,13 @@ function moveParagraph(bol = true) {
     skip = true;
     synth.cancel(utterance);
     element = bol ? element.nextElementSibling : element.previousElementSibling;
-    while (textToSkip.includes(element?.textContent)) {
-        element = bol ? element.nextElementSibling : element.previousElementSibling;
-        if (!element) break;
+    if(!bol) {
+        while (textToSkip.includes(element?.textContent)) {
+            element = bol ? element.nextElementSibling : element.previousElementSibling;
+            if (!element) break;
+        }
     }
+    
     if(element) {
         utterance = createUtterance(element);
         synth.speak(utterance);
