@@ -108,6 +108,7 @@ function onClickPlay() {
 }
 
 function onClickPause() {
+    navigator.clipboard.writeText(utterance.text);
     if (synth.speaking) {
         buttonState('pause');
         skip = true;
