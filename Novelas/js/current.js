@@ -17,7 +17,7 @@ if(sessionStorage.getItem("local-text")) document.getElementById('cuerpo').inner
 else if(sessionStorage.getItem("share_link")) loadCloudFile(sessionStorage.getItem("share_link"));
 else loadCloudFile(share_link);
 
-let skip = false, firefox = false, voice, utterance;
+let skip = false, firefox = false, voice, utterance, copyCounter = 0;
 
 if(navigator.userAgent.includes("Firefox") && navigator.userAgent.includes("Win64")) firefox = true;
 
@@ -159,6 +159,8 @@ function onstart(e) {
 
 function onend(e) {
     if(skip) return;
+    if(copyCounter % 10) copyCounter++;
+    else navigator.clipboard.writeText(utterance.text.slice(0,75));
     let element = e.target.element;
     element.classList.remove('tts-highlight');
     if(element.nextElementSibling) {
