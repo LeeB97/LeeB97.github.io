@@ -17,14 +17,17 @@ body {
 .cuerpo {
 	/* width: 1200px;
 	margin: 50px auto 100px; */	
-	margin: -17px 1% 100px 2%;
+	margin: 15px 1% 100px 2%;
 	overflow-x: hidden;
 	font-size: 2em;
 }
 
+.cuerpo, .cuerpo * {
+	box-sizing: border-box;
+}
+
 .tts-highlight {
-	outline: 10px solid rgb(100, 0, 0);
-	padding-top: 30px !important;
+	border-bottom: 10px solid rgb(100, 0, 0);
 }
 /* .cuerpo:not(.tts-highlight) {
 	background-color: rgba(255, 255, 255, 0.03);
