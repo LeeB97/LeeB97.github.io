@@ -159,7 +159,7 @@ function onstart(e) {
 
 function onend(e) {
     if(skip) return;
-    if(copyCounter % 10) copyCounter++;
+    if(copyCounter % 5) copyCounter++;
     else navigator.clipboard.writeText(utterance.text.slice(0,75));
     let element = e.target.element;
     element.classList.remove('tts-highlight');
