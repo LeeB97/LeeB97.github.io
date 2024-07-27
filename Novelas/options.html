@@ -139,6 +139,7 @@ label {
         <div class="controls">
             <button class="btn" onclick="speak()">Play</button>
             <button class="btn" onclick="back()">Clear</button>
+            <button class="btn" onclick="deleteStorage()">Delete Storage</button>
             <button class="btn" onclick="save()">Save</button>
         </div>
         
@@ -230,9 +231,15 @@ function back() {
     window.location.href = "index.html";
 }
 
+function deleteStorage() {
+  localStorage.clear();
+}
+
 function save() {
     let selectedVoice = voiceSelect.selectedOptions[0].getAttribute('data-name');
     if(share_link.value != '') {
+      localStorage.setItem('customLink',share_link.value);
+      localStorage.setItem('customLinkType',"txt");
       let dropVal = "";
       if(share_link.value.includes("https://www.dropbox.com")) {
         dropVal = 'https://dl.dropboxusercontent.com'+share_link.value.split("https://www.dropbox.com").join("");

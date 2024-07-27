@@ -15,6 +15,7 @@ textToSkip = [
 
 if(sessionStorage.getItem("local-text")) document.getElementById('cuerpo').innerHTML = sessionStorage.getItem("local-text");
 else if(sessionStorage.getItem("share_link")) loadCloudFile(sessionStorage.getItem("share_link"));
+else if(localStorage.getItem('customLink')) loadCloudFile(localStorage.getItem('customLink'));
 else loadCloudFile(share_link);
 
 let skip = false, firefox = false, voice, utterance, copyCounter = 0;
