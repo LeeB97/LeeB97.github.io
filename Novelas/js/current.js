@@ -153,6 +153,7 @@ function moveParagraph(bol = true) {
 function onstart(e) {
     if(skip) skip = false;
     let element = e.target.element;
+    navigator.clipboard.writeText(utterance.text.slice(0,75));
     element.classList.add('tts-highlight');
     element.scrollIntoView({ behavior: 'smooth' }); //, block: 'center'
     buttonState('play');
@@ -160,8 +161,8 @@ function onstart(e) {
 
 function onend(e) {
     if(skip) return;
-    if(copyCounter % 5) copyCounter++;
-    else navigator.clipboard.writeText(utterance.text.slice(0,75));
+    // if(copyCounter % 5) copyCounter++;
+    // else navigator.clipboard.writeText(utterance.text.slice(0,75));
     let element = e.target.element;
     element.classList.remove('tts-highlight');
     if(element.nextElementSibling) {
