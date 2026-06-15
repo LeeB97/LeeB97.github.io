@@ -1,48 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Novelas</title>
-
-    <link rel="shortcut icon" href="imagenes/Icons/app/book.png" type="image/x-icon">
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="css/css.css">
-    
-    <script defer src="js/current.js"></script>
-    <script defer src="js/menu.js"></script>
-
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Novels TTS Reader</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Outfit:wght@300;400;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script src="assets/js/index.js" defer></script>
 </head>
-
 <body>
-<div class="botones">
-    <button id="play" onclick="onClickPlay()"></button>&nbsp;
-    <button id="pause" onclick="onClickPause()"></button>&nbsp;
-    <button id="stop" onclick="onClickStop()"></button>&nbsp;
-    <button id="previous" onclick="moveParagraph(false)"></button>&nbsp;
-    <button id="next" onclick="moveParagraph(true)"></button>
-</div>
-<dialog id="search">
-    <div>
-        <input id="search-text" type="text">
-        <button>Search</button>
-    </div>
-</dialog>
-<div class="menu" onclick="this.classList.toggle('open')">
-    <div class="button" onclick="window.open('options.html','_self')"><img src="imagenes/Icons/options.svg"></div>
-    <!-- <div class="button" onclick="navigator.clipboard.writeText(utterance.text)"><img src="imagenes/Icons/copy.svg"></div> -->
-    <div class="button" onclick="window.location.reload()"><img src="imagenes/Icons/reload.svg"></div>
-    <div class="button" onclick="document.querySelector('#search').showModal()"><img src="imagenes/Icons/search.svg"></div>
-</div>
-<div class="cuerpo" id="cuerpo">
+<div class="transcript" id="transcript">
 
 </div>
-<script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./service-worker.js')
-    }
-</script>
 </body>
-
 </html>
